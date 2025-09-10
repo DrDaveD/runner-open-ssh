@@ -22,15 +22,17 @@ First add the action to your workflow.
       gatewayPrivateKey: ${{ secrets.GATEWAY_PRIVATE_KEY }}
       gatewayIP: ${{ secrets.GATEWAY_IP }}
       maxLifeTime: 30
+      port: 2222  # Optional: defaults to 2222
 ```
 
 - **sshPublicKey**: Public SSH key that will be authorized in the github runner.
-- **gatewayPrivateKey**: Private SSH Key that can access the Gateway server. The action will use this key to SSH to the gateway server and open a proxy on port 2222, consequently, the gateway server will be able to SSH with the runner.
+- **gatewayPrivateKey**: Private SSH Key that can access the Gateway server. The action will use this key to SSH to the gateway server and open a proxy on the specified port, consequently, the gateway server will be able to SSH with the runner.
 - **gatewayIP** is the public IP of the gateway (used by the runner to ssh to the gateway)
 - **maxLifeTime** is the maximum life of the connection in seconds. default value is 3600 (1 hour). When the action SSH's to the gateway, it runs "sleep ${maxLifeTime}".
+- **port**: The port to use for SSH connection. Optional, defaults to 2222.
 
-After the job is run, the runner creates a proxy on the gateway on port 2222.
-So, to connect to the runner, first ssh to the gateway server, and from there run "ssh -p 2222 runner@localhost".
+After the job is run, the runner creates a proxy on the gateway on the specified port (defaults to 2222).
+So, to connect to the runner, first ssh to the gateway server, and from there run "ssh -p <port> runner@localhost" (where <port> is the port you configured, or 2222 if using the default).
 
 The ssh proxy connection is run as a background process (using the ampersand &). And to keep the action alive a tmux terminal is attached.
 
