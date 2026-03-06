@@ -21,13 +21,15 @@ First add the action to your workflow.
       sshPublicKey: ${{ secrets.SSH_PUBLIC_KEY }}
       gatewayPrivateKey: ${{ secrets.GATEWAY_PRIVATE_KEY }}
       gatewayIP: ${{ secrets.GATEWAY_IP }}
+      gatewayUser: ${{ secrets.GATEWAY_USER }}
       maxLifeTime: 30
       port: 2222  # Optional: defaults to 2222
 ```
 
 - **sshPublicKey**: Public SSH key that will be authorized in the github runner.
 - **gatewayPrivateKey**: Private SSH Key that can access the Gateway server. The action will use this key to SSH to the gateway server and open a proxy on the specified port, consequently, the gateway server will be able to SSH with the runner.
-- **gatewayIP** is the public IP of the gateway (used by the runner to ssh to the gateway)
+- **gatewayIP** is the public IP of the gateway (used by the runner to ssh to the gateway).
+- **gatewayUser** is the user for SSH on the gateway.
 - **maxLifeTime** is the maximum life of the connection in seconds. default value is 3600 (1 hour). When the action SSH's to the gateway, it runs "sleep ${maxLifeTime}".
 - **port**: The port to use for SSH connection. Optional, defaults to 2222.
 
